@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Dummy Banking System" />
+        <style>
+            body {
+                background-color: #667eea; /* Indigo */
+                margin: 0;
+                padding: 0;
+                width: 100%; 
+                height: 100%;
+            }
+            .bg-gray-100 {
+                background-color: #f7fafc;
+            }
+            .max-w-lg {
+                max-width: 32rem;
+            }
+            .mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .my-10 {
+                margin-top: 2.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .p-6 {
+                padding: 1.5rem;
+            }
+            .bg-white {
+                background-color: #ffffff;
+            }
+            .rounded-lg {
+                border-radius: 0.5rem;
+            }
+            .shadow-xl {
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .text-2xl {
+                font-size: 1.5rem;
+                line-height: 2rem;
+            }
+            .font-bold {
+                font-weight: 700;
+            }
+            .text-center {
+                text-align: center;
+            }
+            .text-green-600 {
+                color: #16a34a;
+            }
+            .mt-4 {
+                margin-top: 1rem;
+            }
+            .text-lg {
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+            }
+            .text-gray-700 {
+                color: #4a5568;
+            }
+            .font-bold {
+                font-weight: 700;
+            }
+            .text-green-500 {
+                color: #22c55e;
+            }
+            .mt-2 {
+                margin-top: 0.5rem;
+            }
+            .text-blue-500 {
+                color: #3b82f6;
+            }
+            .mt-6 {
+                margin-top: 1.5rem;
+            }
+            .font-semibold {
+                font-weight: 600;
+            }
+            .text-gray-900 {
+                color: #1a202c;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #667eea; height: auto; border-radius: 60px; width: 80%; margin: 20px; padding: 0;">
+            <tr>
+                <td align="center">
+                    <table class="bg-gray-100 max-w-lg mx-auto my-10 p-6 bg-white rounded-lg shadow-xl" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 0.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); max-width: 32rem; padding: 1.5rem; margin: 2.5rem auto;">
+                        <tr>
+                            <td>
+                                <h3 class="text-2xl font-bold text-center text-green-600" style="font-size: 1.5rem; line-height: 2rem; font-weight: 700; text-align: center; color: #16a34a;">Hello, {{ user.first_name }} {{ user.last_name }}</h3>
+                                <p class="mt-4 text-lg text-gray-700" style="margin-top: 1rem; font-size: 1.125rem; line-height: 1.75rem; color: #4a5568;">Your deposit of <span class="font-bold text-green-500" style="font-weight: 700; color: #22c55e;">${{ amount }}</span> has been successfully completed.</p>
+                                <p class="mt-2 text-lg text-gray-700" style="margin-top: 0.5rem; font-size: 1.125rem; line-height: 1.75rem; color: #4a5568;">After the deposit, your total amount is now <span class="font-bold text-blue-500" style="font-weight: 700; color: #3b82f6;">${{ user.account.balance }}</span>.</p>
+                                <p class="mt-6 text-lg text-gray-700" style="margin-top: 1.5rem; font-size: 1.125rem; line-height: 1.75rem; color: #4a5568;">Thanks for banking with us!</p>
+                                <p class="mt-2 text-lg font-semibold text-gray-900" style="margin-top: 0.5rem; font-size: 1.125rem; line-height: 1.75rem; font-weight: 600; color: #1a202c;">mamar Bank</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
