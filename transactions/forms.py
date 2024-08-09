@@ -9,7 +9,7 @@ class TransactionForm(forms.ModelForm):
     class Meta:
         model = Transaction
         fields = ['amount' ,'transaction_type']
-     
+    
     
     def __init__(self, *args , **kwargs):
         self.user_account = kwargs.pop('account') #account value k pop kore anlam
@@ -70,6 +70,7 @@ class BalanceTransferForm(TransactionForm):
         model = Transaction
         fields = ['amount','to_account' , 'transaction_type']
 
+
     def clean_amount(self):
         amount = self.cleaned_data.get('amount')
         account = self.user_account
@@ -87,7 +88,7 @@ class BalanceTransferForm(TransactionForm):
         
     def clean_to_account(self):
         to_account = self.cleaned_data.get('to_account')
-
+       
         try:
             recipient_account = UserBankAccount.objects.get( account_no = to_account)
         except UserBankAccount.DoesNotExist:

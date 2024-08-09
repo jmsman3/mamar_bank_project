@@ -29,7 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECRET_KEY = 'django-insecure-pj0%6$6cy5e2pi)czzj^x-))no!2i@$=_t^2jl(al8e7jvmy-t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
 
 ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
@@ -49,10 +49,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'crispy_forms',
+    "crispy_bootstrap5",
     'accounts',
     'core',
     'transactions',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

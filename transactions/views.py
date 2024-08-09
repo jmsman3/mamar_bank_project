@@ -4,7 +4,7 @@ from django.views.generic import CreateView ,ListView
 from .models import Transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import DepositForm,WithdrawForm,LoanRequestForm  ,BalanceTransferForm
-from transactions.constants import DEPOSIT,WITHDRAWAL,LOAN,LOAN_PAID,TRASNFER_MONEY
+from transactions.constants import DEPOSIT,WITHDRAWAL,LOAN,LOAN_PAID,TRASNFER_MONEY  ,RECEIVER_MONEY
 from django.contrib import messages
 from django.http import HttpResponse
 from django.db.models import Sum
@@ -16,8 +16,24 @@ from django.core.mail import EmailMessage ,EmailMultiAlternatives
 from django.template.loader import render_to_string
 # Create your views here.
 
-def send_transaction_email(user,amount ,subject ,template):
-    message = render_to_string(template ,{'user':user, 'amount' : amount})
+def send_transfer_email(user ,to_user, sender_acc_num ,receiver_acc_num,amount ,subject ,template,receipent_balance):
+    message = render_to_string(template ,{'user':user, 'to_user':to_user, 'sender_acc_num':sender_acc_num, 'receiver_acc_num':receiver_acc_num,  'amount' : amount,'receipent_balance' :receipent_balance  })
+    
+    send_email = EmailMultiAlternatives( subject, '' , to=[user.email])
+    send_email.attach_alternative(message ,'text/html')
+    send_email.send()
+
+def receiver_transfer_email(recipient_user ,to_user, sender_acc_num ,receiver_acc_num,amount ,subject ,template,receipent_balance):
+    message = render_to_string(template ,{'recipient_user':recipient_user, 'to_user':to_user, 'sender_acc_num':sender_acc_num, 'receiver_acc_num':receiver_acc_num,  'amount' : amount,'receipent_balance' :receipent_balance  })
+    
+    send_email = EmailMultiAlternatives( subject, '' , to=[recipient_user.email])
+    send_email.attach_alternative(message ,'text/html')
+    send_email.send()
+
+
+  
+def send_transaction_email(user ,amount ,subject ,template):
+    message = render_to_string(template ,{'user':user,  'amount' : amount , })
     
     send_email = EmailMultiAlternatives( subject, '' , to=[user.email])
     send_email.attach_alternative(message ,'text/html')
@@ -168,22 +184,39 @@ class BalanceTransferView(TransactionCreateMixin):
     form_class = BalanceTransferForm
     template_name = 'transactions/balance_transfer.html'
     title = 'Transfer Balance'
-    success_url = reverse_lazy('transaction_report')
+    success_url = reverse_lazy('transaction_report') 
 
     def get_initial(self):
         initial = {'transaction_type' : TRASNFER_MONEY }
         return initial
-    
+ 
     def form_valid(self,form):
         amount = form.cleaned_data.get('amount')
         recipient_account = form.cleaned_data.get('to_account')
-        account = self.request.user.account
+        account = self.request.user.account 
+        receipent_account = recipient_account.user
+        
+
+        sender_account_number = self.request.user.account.account_no
+        receiver_account_number = recipient_account.account_no
 
         account.balance -= amount
         account.save(update_fields = ['balance'])   #je taka pathabe 
+        
+        previous_balance =  recipient_account.balance
 
-        recipient_account.balance += amount
+        recipient_account.balance += amount 
         recipient_account.save(update_fields=['balance']) # jar kache taka pathabe
 
+        Transaction.objects.create(account= recipient_account ,amount=previous_balance , balance_after_transaction= recipient_account.balance ,  transaction_type= RECEIVER_MONEY)
+
+        receipent_balance = recipient_account.balance
+
+
         messages.success(self.request, f"{amount}$ has been Transfered to {recipient_account.user.username} successfully")
+
+        send_transfer_email(self.request.user, receipent_account ,sender_account_number,receiver_account_number,amount,  'Send Transfer Message', 'transactions/transfer_email.html',receipent_balance)
+
+        receiver_transfer_email(receipent_account, receipent_account,sender_account_number,receiver_account_number , amount, 'Received Transfer Message', 'transactions/received_transfer_email.html',receipent_balance)
+
         return super().form_valid(form)

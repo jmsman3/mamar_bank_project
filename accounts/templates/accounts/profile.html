@@ -16,6 +16,7 @@
     <div class="w-full mt-10">
         <form method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             {% csrf_token %} {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
+<!-- ----------------------------------------------------------------First name + Last Name --> 
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ form.first_name.id_for_label }}">
@@ -32,6 +33,7 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
+<!-- ----------------------------------------------------------------Email + Account Type -->
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ form.email.id_for_label }}">
@@ -48,6 +50,8 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
+<!-- ---------------------------------------------------------------- Gender + Birthday -->
+
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ form.gender.id_for_label }}">
@@ -64,6 +68,7 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
+<!-- ----------------------------------------------------------------Password_1 + Password_2 -->
             <div class="flex flex-wrap -mx-3">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ form.password1.id_for_label }}">
@@ -80,7 +85,7 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
-
+<!-- ----------------------------------------------------------------Street Address + City -->
             {% for hidden_field in form.hidden_fields %} {{ hidden_field.errors }} {{ hidden_field }} {% endfor %}
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -98,6 +103,7 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
+<!-- ----------------------------------------------------------------Postal Code + Country-->
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="{{ form.postal_code.id_for_label }}">
@@ -114,6 +120,10 @@
                     {% endfor %} {% endif %}
                 </div>
             </div>
+
+<!-- ----------------------------------------------------------------Final Submit Button-->
+           
+
             <div class="flex items-center justify-between">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     Update
